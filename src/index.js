@@ -13,6 +13,7 @@ for (var i = 1; i <= 12; i++) {
 }
 const contentDom = document.getElementById('content');
 function onDrop(ev) {
+    this.classList.remove('over')
     let srcImgId = ev.dataTransfer.getData("text"),
         srcImg = document.getElementById(srcImgId),
         {target} = ev,
@@ -39,9 +40,25 @@ images.forEach((src, i)=> {
     node.id = `image-${i}`;
     node.ondragstart = (function (img) {
         return function (ev) {
+            this.classList.add('move');
             ev.dataTransfer.setData("text", ev.target.id);
         }
     })(src);
+    node.addEventListener('dragend', function (e) {
+        if (e.preventDefault) e.preventDefault();
+        this.classList.remove('move');
+        return false;
+    },false);
+    node.addEventListener('dragover', function (e) {
+        if (e.preventDefault) e.preventDefault();
+        this.classList.add('over')
+        return false;
+    }, false);
+    node.addEventListener('dragleave', function (e) {
+        if (e.preventDefault) e.preventDefault();
+        this.classList.remove('over')
+        return false;
+    }, false);
     node.dataset.imageIndex = i;
     contentDom.appendChild(node)
 });
