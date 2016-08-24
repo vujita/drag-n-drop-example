@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && webpack",
-    "start": "webpack-dev-server --watch --hot --inline"
+    "start": "webpack-dev-server --watch --hot --inline",
+    "publish": "npm run build && node ./publish-gh-page.js"
   },
   "author": "",
   "license": "ISC",
